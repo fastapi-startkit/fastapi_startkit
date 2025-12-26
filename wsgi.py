@@ -1,6 +1,6 @@
 import os
-from fastapi_startkit_foundation import Application
-from fastapi_startkit_foundation.providers import ConfigurationProvider
+from fastapi_startkit import Application
+from fastapi_startkit.providers import ConfigurationProvider
 
 # Define your providers
 # ConfigurationProvider is required to load your config files.

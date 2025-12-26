@@ -13,16 +13,16 @@ if [ -d "$MODULES_DIR" ]; then
         if [ -d "$module" ] && [ -f "$module/pyproject.toml" ]; then
             module_name=$(basename "$module")
             echo "📦 Releasing module: $module_name"
-            
+
             # Navigate to module directory
             cd "$module"
-            
+
             # Build and Publish
             # NOTE: Remove --dry-run to actually publish
             echo "   Building and publishing $module_name..."
             poetry build
-            poetry publish --dry-run
-            
+            poetry publish
+
             # Return to root
             cd - > /dev/null
             echo "✅ $module_name processed."
@@ -32,12 +32,3 @@ if [ -d "$MODULES_DIR" ]; then
 else
     echo "⚠️  No modules directory found."
 fi
-
-# 2. Release Root Package
-echo "📦 Releasing root package: fastapi-startkit"
-# NOTE: Remove --dry-run to actually publish
-poetry build
-poetry publish --dry-run
-
-echo "🎉 Release process complete (DRY RUN)!"
-echo "ℹ️  To actually publish, edit this script and remove '--dry-run' flags."

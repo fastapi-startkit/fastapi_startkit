@@ -1,4 +1,4 @@
-from fastapi_startkit_foundation.loader import Loader
+from fastapi_startkit.loader import Loader
 from ..utils.structures import data
 from ..exceptions import InvalidConfigurationLocation, InvalidConfigurationSetup
 

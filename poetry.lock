@@ -716,6 +716,24 @@ uvicorn = {version = ">=0.15.0", extras = ["standard"]}
 standard = ["uvicorn[standard] (>=0.15.0)"]
 
 [[package]]
+name = "fastapi-startkit"
+version = "0.1.0"
+description = "Core Masonite components (Container, Config, Loader)"
+optional = false
+python-versions = ">=3.12,<4.0"
+groups = ["main"]
+files = []
+develop = false
+
+[package.dependencies]
+dotty-dict = ">=1.3.1"
+fastapi = {version = ">=0.124.4,<0.125.0", extras = ["standard"]}
+
+[package.source]
+type = "directory"
+url = "modules/fastapi_startkit"
+
+[[package]]
 name = "fastapi-startkit-database"
 version = "0.1.0"
 description = "Database module for FastAPI StartKit"
@@ -732,23 +750,6 @@ masonite-orm = ">=2.21.0"
 [package.source]
 type = "directory"
 url = "modules/database"
-
-[[package]]
-name = "fastapi-startkit-foundation"
-version = "0.1.0"
-description = "Core Masonite components (Container, Config, Loader)"
-optional = false
-python-versions = ">=3.12,<4.0"
-groups = ["main"]
-files = []
-develop = false
-
-[package.dependencies]
-dotty-dict = ">=1.3.1"
-
-[package.source]
-type = "directory"
-url = "modules/foundation"
 
 [[package]]
 name = "fastar"
@@ -2518,4 +2519,4 @@ database = ["fastapi-startkit-database"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4.0"
-content-hash = "23c0ae104907eb760e3e2d3f81799aaf3973fe36c71f01f271708eab3799ac26"
+content-hash = "177270fa5bdbb6bc1da863fef0775db5016de7c0dfc1b6825253a4a6698a177e"

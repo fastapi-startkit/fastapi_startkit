@@ -1,3 +1,5 @@
+import os
+
 from masoniteorm.connections import ConnectionResolver
 
 DATABASES = {
@@ -5,7 +7,7 @@ DATABASES = {
     "mysql": {
         "host": "127.0.0.1",
         "driver": "mysql",
-        "database": "masonite",
+        "database": os.getenv("DB_DATABASE"),
         "user": "root",
         "password": "",
         "port": 3306,

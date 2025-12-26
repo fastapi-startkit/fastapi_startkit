@@ -1,29 +1,32 @@
 """Module for the LoadEnvironment class."""
 
 import os
+import sys
 from pathlib import Path
 
 
 class LoadEnvironment:
     """This class is used for loading the environment from .env and .env.* files."""
 
-    def __init__(self, environment=None, override=True, only=None):
+    def __init__(self, environment=None, override=True, only=None, base_path=None):
         """LoadEnvironment constructor.
 
         Keyword Arguments:
             env {string} -- An additional environment file that you want to load. (default: {None})
             override {bool} -- Whether or not the environment variables found should overwrite existing ones. (default: {False})
             only {string} -- If this is set then it will only load that environment. (default: {None})
+            base_path {string} -- The base path to look for the environment file. (default: {None})
         """
         from dotenv import load_dotenv
 
         self.env = load_dotenv
+        self.base_path = Path(base_path) if base_path else Path(".")
 
         if only:
             self._load_environment(only, override=override)
             return
 
-        env_path = str(Path(".") / ".env")
+        env_path = str(self.base_path / ".env")
         self.env(env_path, override=override)
 
         if os.environ.get("APP_ENV"):
@@ -43,7 +46,7 @@ class LoadEnvironment:
         Keyword Arguments:
             override {bool} -- Whether the environment file should overwrite existing environment keys. (default: {False})
         """
-        env_path = str(Path(".") / ".env.{}".format(environment))
+        env_path = str(self.base_path / f".env.{environment}")
         self.env(dotenv_path=env_path, override=override)
 
 

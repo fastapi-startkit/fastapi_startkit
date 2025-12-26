@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-# from core.environment import LoadEnvironment
+
 from .container import Container
+from .environment.environment import LoadEnvironment
 
 
 class Application(Container):
@@ -8,6 +9,7 @@ class Application(Container):
         self.base_path: str = base_path
         self.providers = providers if providers else []
 
+        self.load_environment()
         self.register_providers()
 
         self.fastapi = FastAPI()
@@ -34,4 +36,5 @@ class Application(Container):
     def __call__(self):
         return self.fastapi
 
-
+    def load_environment(self):
+        LoadEnvironment(base_path=self.base_path)

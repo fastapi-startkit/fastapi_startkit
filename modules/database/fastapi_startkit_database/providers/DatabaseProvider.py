@@ -1,4 +1,4 @@
-from fastapi_startkit_foundation.providers import Provider
+from fastapi_startkit.providers import Provider
 
 
 class DatabaseProvider(Provider):
