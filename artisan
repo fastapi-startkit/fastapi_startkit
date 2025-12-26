@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+import typer
+import main # This line loads the environment variables
+
+cli = typer.Typer()
+
+from core.commands import register_command
+register_command(cli)
+
+if __name__ == "__main__":
+    cli()
