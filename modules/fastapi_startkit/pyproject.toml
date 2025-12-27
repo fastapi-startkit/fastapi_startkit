@@ -1,7 +1,7 @@
 [project]
 name = "fastapi-startkit"
-version = "0.1.1"
-description = "Core Masonite components (Container, Config, Loader)"
+version = "0.1.2"
+description = "Fastapi_Startkit components"
 authors = [
     {name = "Bedram Tamang", email = "tmgbedu@gmail.com"}
 ]

@@ -1,3 +1,5 @@
+from fastapi_startkit.logging import Logger
+
 from wsgi import application as app
 
 
