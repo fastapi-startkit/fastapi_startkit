@@ -25,7 +25,7 @@ class Loader:
         module_paths = list(map(as_filepath, files_or_directories))
         for module_loader, name, _ in pkgutil.iter_modules(module_paths):
             module = load(
-                f"{os.path.relpath(module_loader.path)}.{name}",
+                f"{module_loader.path}/{name}.py",
                 raise_exception=raise_exception,
             )
             _modules.update({name: module})

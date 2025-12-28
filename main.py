@@ -5,4 +5,5 @@ from wsgi import application as app
 
 @app.get('/')
 def index():
-    return app.make('config').get('database.databases')
+    app.make('logger').info('Hello')
+    return app.make('config').get('logging')
