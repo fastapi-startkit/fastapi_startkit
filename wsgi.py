@@ -1,12 +1,19 @@
 import os
 from fastapi_startkit import Application
-from fastapi_startkit.configuration.providers import ConfigurationProvider
 from fastapi_startkit.logging.providers import LoggingProvider
 
 # Define your providers
 PROVIDERS = [
-    ConfigurationProvider,
-    LoggingProvider
+    (LoggingProvider, {
+        'default': 'single',
+        'channels': {
+            'single': {
+                'driver': 'single',
+                'level': 'debug',
+                'path': 'storage/logs/single.log'
+            },
+        }
+    })
 ]
 
 # Initialize the application

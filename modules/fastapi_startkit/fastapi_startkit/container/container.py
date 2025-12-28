@@ -15,19 +15,33 @@ class Container:
     Performs bindings and resolving of objects to and from the container.
     """
 
-    objects = {}
-    strict = False
-    override = True
-    resolve_parameters = {}
-    remember = False
-    _hooks = {
-        "make": {},
-        "bind": {},
-        "resolve": {},
-    }
+    _instance = None
 
-    swaps = {}
-    _remembered = {}
+    @classmethod
+    def set_instance(cls, instance):
+        cls._instance = instance
+
+    @classmethod
+    def instance(cls):
+        if cls._instance is None:
+            raise RuntimeError("Container not initialized")
+        return cls._instance
+
+
+    def __init__(self):
+        if not hasattr(self, 'objects'):
+            self.objects = {}
+            self.strict = False
+            self.override = True
+            self.resolve_parameters = {}
+            self.remember = False
+            self._hooks = {
+                "make": {},
+                "bind": {},
+                "resolve": {},
+            }
+            self.swaps = {}
+            self._remembered = {}
 
     def bind(self, name, class_obj):
         """Bind classes into the container with a key value pair.

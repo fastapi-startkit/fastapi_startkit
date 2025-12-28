@@ -20,17 +20,16 @@ def load(path, object_name=None, default=None, raise_exception=False):
     Returns:
         {object} -- The value (or default) read in the module or the module if no object name
     """
-    # modularize path if needed
-    module_path = modularize(path)
-    # module = pydoc.locate(dotted_path)
     try:
-        module = importlib.import_module(module_path)
+        name = path.split('/')[-1].replace('.py', '') if '/' in path else path.replace('.py', '')
+        spec = importlib.util.spec_from_file_location(name, path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
     except Exception as e:
         error_message = (
-            f"'{module_path}' not found OR error when importing this module: {str(e)}"
+            f"'{path}' error when loading from file: {str(e)}"
         )
         print("Warning: " + error_message)
-
         if raise_exception:
             raise LoaderNotFound(error_message)
         return None
@@ -42,12 +41,12 @@ def load(path, object_name=None, default=None, raise_exception=False):
             return getattr(module, object_name)
         except KeyError:
             if raise_exception:
-                raise LoaderNotFound(f"{object_name} not found in {module_path}")
+                raise LoaderNotFound(f"{object_name} not found in {path}")
             else:
                 return default
 
 
-def data(dictionary={}):
+def data(dictionary=None):
     """Transform the given dictionary to be read/written with dot notation.
 
     Arguments:
@@ -56,7 +55,7 @@ def data(dictionary={}):
     Returns:
         {dict} -- A dot dictionary
     """
-    return dotty(dictionary)
+    return dotty(dictionary or {})
 
 
 def data_get(dictionary, key, default=None):
