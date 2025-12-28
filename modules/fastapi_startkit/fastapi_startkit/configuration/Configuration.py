@@ -33,11 +33,6 @@ class Configuration:
             for name, value in params.items():
                 self._config[f"{module_name}.{name.lower()}"] = value
 
-        # check loaded configuration
-        if not self._config.get("application"):
-            raise InvalidConfigurationLocation(
-                f"Config directory {config_root} does not contain required configuration files."
-            )
 
     def merge_with(self, path, external_config):
         """Merge external config at key with project config at same key. It's especially
@@ -53,7 +48,7 @@ class Configuration:
             )
         if isinstance(external_config, str):
             # config is a path and should be loaded
-            params = Loader.get_parameters(external_config)
+            params = Loader().get_parameters(external_config)
         else:
             params = external_config
         base_config = {name.lower(): value for name, value in params.items()}

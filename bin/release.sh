@@ -18,7 +18,6 @@ if [ -d "$MODULES_DIR" ]; then
             cd "$module"
 
             # Build and Publish
-            # NOTE: Remove --dry-run to actually publish
             echo "   Building and publishing $module_name..."
             poetry build
             poetry publish

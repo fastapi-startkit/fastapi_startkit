@@ -5,12 +5,18 @@ from fastapi import FastAPI
 from .container import Container
 from .environment.environment import LoadEnvironment
 from .facades import Facade
+from .configuration.providers import ConfigurationProvider
 
 
 class Application(Container):
+    DEFAULT_PROVIDERS = [
+        ConfigurationProvider,
+    ]
+
     def __init__(self, base_path: str = None, providers=None):
         self.base_path: str = base_path
-        self.providers = providers if providers else []
+        self.providers = self.DEFAULT_PROVIDERS + (providers or [])
+        self.published_resources = {}
         
         Facade.application = self
 
@@ -23,8 +29,14 @@ class Application(Container):
 
     def register_providers(self):
         providers = []
-        for provider_class in self.providers:
-            provider = provider_class(self)
+        for provider_data in self.providers:
+            config = {}
+            if isinstance(provider_data, tuple):
+                provider_class, config = provider_data
+            else:
+                provider_class = provider_data
+
+            provider = provider_class(self, config=config)
             provider.register()
             providers.append(provider)
         
