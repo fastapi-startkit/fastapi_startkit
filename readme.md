@@ -9,46 +9,39 @@ There are two ways to start this project:
 ```shell
 git clone https://github.com/fastapi-startkit/fastapi_startkit
 ```
-2. 
+2. Add the `fastapi-startkit` as a dependency.
 
 ```shell
 poetry add fastapi-startkit
-```
-
-### Optional Extras
-To include database support (Masonite ORM):
-
-```shell
-poetry add fastapi-startkit --extras "database"
 ```
 
 ---
 
 ## Quick Start
 
-### 1. Application Setup (`wsgi.py` or `main.py`)
-
-No `sys.path` manipulation is required. Import `Application` and your necessary providers directly.
-
-> **Important**: You must explicitly include `ConfigurationProvider` to load configuration files from your `config/` directory.
-
+### 1. Application Setup
 ```python
 import os
 from fastapi_startkit import Application
-from fastapi_startkit_foundation.providers import ConfigurationProvider
-from fastapi_startkit_database.providers import DatabaseProvider
+from fastapi_startkit.logging.providers import LoggingProvider
 
 # Define your providers
-# ConfigurationProvider is required to load your config files.
 PROVIDERS = [
-    ConfigurationProvider,
-    DatabaseProvider,
+    (LoggingProvider, {
+        'default': 'single',
+        'channels': {
+            'single': {
+                'driver': 'single',
+                'level': 'debug',
+                'path': 'storage/logs/single.log'
+            },
+        }
+    })
 ]
 
 # Initialize the application
-# base_path should point to the root where your 'config/' directory exists.
 base_path = os.getcwd()
-application = Application(base_path, PROVIDERS)
+app = Application(base_path, providers=PROVIDERS)
 ```
 
 ### 2. Define Routes
@@ -56,12 +49,13 @@ application = Application(base_path, PROVIDERS)
 You can define routes using the standard FastAPI instance exposed by the application.
 
 ```python
-from wsgi import app
+from bootstrap import app
 
 @app.get('/')
 def index():
     # Access the container via the application instance if needed, 
     # or just use standard FastAPI features.
+    app.make('logger').info('Hello')
     return {"message": "Hello World"}
 ```
 

@@ -19,10 +19,22 @@ dependencies = [
     "exceptionite (>=3.0.0,<4.0.0)",
     "hashids (>=1.3.1,<2.0.0)",
     "bcrypt (>=5.0.0,<6.0.0)",
-    "fastapi-startkit @ file:modules/fastapi_startkit",
+    "fastapi-startkit",
 ]
 
 [project.optional-dependencies]
 database = [
-    "fastapi-startkit-database @ file:modules/database",
+    "fastapi-startkit-database",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+fastapi-startkit = { path = "modules/fastapi_startkit" }
+fastapi-startkit-database = { path = "modules/database" }
+
+[dependency-groups]
+dev = [
+    "dumpdie>=1.5.0",
 ]
