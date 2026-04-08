@@ -1,4 +1,6 @@
 .idea
+.DS_Store
 .venv
 **__pycache__
 storage
+modules

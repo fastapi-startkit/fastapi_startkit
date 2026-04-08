@@ -18,4 +18,4 @@ PROVIDERS = [
 
 # Initialize the application
 base_path = os.getcwd()
-application = Application(base_path, PROVIDERS)
+app = Application(base_path, PROVIDERS)

@@ -16,10 +16,11 @@ class Application(Container):
         ConfigurationProvider,
     ]
 
-    def __init__(self, base_path: str = None, providers=None):
+    def __init__(self, base_path: str = None,env=None, providers=None):
         super().__init__()
 
-        self.base_path: str = base_path
+        self.base_path: str | None = base_path
+        self.env = env
         self.providers = self.DEFAULT_PROVIDERS + (providers or [])
         self.published_resources = {}
 

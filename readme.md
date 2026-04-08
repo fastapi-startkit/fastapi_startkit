@@ -3,8 +3,13 @@
 A modular, Masonite-inspired foundation for building robust FastAPI applications.
 
 ## Installation
+There are two ways to start this project:
 
-Install the package via Poetry:
+1. Clone the repository directly (recommended): This method comes with a structured setup for managing configurations, commands, and other project essentials.
+```shell
+git clone https://github.com/fastapi-startkit/fastapi_startkit
+```
+2. 
 
 ```shell
 poetry add fastapi-startkit
