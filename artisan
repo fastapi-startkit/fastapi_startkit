@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-import typer
-import main # This line loads the environment variables
 
-cli = typer.Typer()
+import sys
 
-from core.commands import register_command
-register_command(cli)
+from bootstrap.application import app
 
 if __name__ == "__main__":
-    cli()
+    status = app.handle_command()
+    sys.exit(status if isinstance(status, int) else 0)
