@@ -25,30 +25,16 @@ uv run python artisan serve
 
 ## AI Skills
 
-The application ships with **agent skills** — concise, framework-aware guides that teach AI
-coding agents (Claude Code, Gemini) the conventions of this project: routing, controllers,
-the ORM, requests, and the action pattern. They live alongside your providers and are
-published into each agent's native format on demand.
+Skills teach AI agents (Claude Code, Gemini) this project's conventions.
 
-### List skills
-List every provider that declares skills (this is the default action):
+List providers that declare skills:
 
 ```shell
 uv run python artisan ai:skills
 ```
 
-### Update & sync skills
-Publish the skill stubs and sync them to the supported AI agents:
+Publish stubs and sync them to AI agents:
 
 ```shell
 uv run python artisan ai:skills --sync
 ```
-
-`--sync` regenerates each agent's skill files from the providers that declare them — for
-example writing the Claude Code skill to `.claude/skills/<name>/SKILL.md` and the Gemini
-equivalent. Run it after adding a new provider that declares a skill, or after editing an
-existing skill, so every agent picks up the latest version.
-
-> **Tip:** commit the generated skill files (e.g. `.claude/skills/`) so anyone who clones the
-> project gets framework-aware AI assistance out of the box. Keep personal, machine-specific
-> files like `.claude/settings.local.json` out of version control.
