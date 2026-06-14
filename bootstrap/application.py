@@ -12,6 +12,6 @@ app: Application = Application(
     providers=[
         AISkillProvider,
         LogProvider,
-        (FastapiProvider,FastAPIConfig)
-    ]
+        (FastapiProvider, FastAPIConfig),
+    ],
 )
