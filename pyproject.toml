@@ -9,7 +9,7 @@ readme = "README.md"
 requires-python = ">=3.12,<4.0"
 dependencies = [
     "cleo>=2.1.0",
-    "fastapi-startkit[database,fastapi,sqlite]",
+    "fastapi-startkit[database,fastapi,sqlite]==0.44.0",
 ]
 
 [tool.uv]
@@ -19,4 +19,10 @@ package = false
 dev = [
     "dumpdie>=1.5.0",
     "pytest>=9.0.2",
+    "pytest-asyncio>=0.24.0",
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["."]
+testpaths = ["tests"]
