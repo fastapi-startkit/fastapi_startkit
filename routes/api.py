@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 api = APIRouter()
 
-@api.get('/')
+
+@api.get("/")
 async def index():
-    return {'message': 'Hello from FastAPI!'}
+    return {"message": "Hello from FastAPI!"}
