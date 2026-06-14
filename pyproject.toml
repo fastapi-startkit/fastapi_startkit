@@ -9,7 +9,7 @@ readme = "README.md"
 requires-python = ">=3.12,<4.0"
 dependencies = [
     "cleo>=2.1.0",
-    "fastapi-startkit[database,fastapi,sqlite]",
+    "fastapi-startkit[database,fastapi,sqlite]==0.44.0",
 ]
 
 [tool.uv]
