@@ -301,7 +301,7 @@ wheels = [
 
 [[package]]
 name = "fastapi-startkit"
-version = "0.13.6"
+version = "0.44.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cleo" },
@@ -312,9 +312,9 @@ dependencies = [
     { name = "pydantic" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b2/87/8f22da1813ff6f096e13d739b18a7e7b3d623694769511dee3bfc4ba28f7/fastapi_startkit-0.13.6.tar.gz", hash = "sha256:9b36a605484ca613da3a27114a86e9b27934d136a1cfc8fe385899f4019461dc", size = 197220, upload-time = "2026-04-23T07:46:12.55Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2b/ba/0d582034aa6171320bd16fe4c9cacf28a752e0ce215877399557f777c7b2/fastapi_startkit-0.44.0.tar.gz", hash = "sha256:1ccb681c729fc5d51dfbb9501eb54ea262d04203dd20fcb0608e7383598b505f", size = 224217, upload-time = "2026-06-13T19:57:09.89Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a1/78/2092ecae2e03ebabfc08c17e96449c764bd7c733a39b565c4e7c245822d2/fastapi_startkit-0.13.6-py3-none-any.whl", hash = "sha256:598589ddddf5b2b7907b727809d2863fbeb02f0e353f1360a16d94079faf2c56", size = 351695, upload-time = "2026-04-23T07:46:04.961Z" },
+    { url = "https://files.pythonhosted.org/packages/36/b0/0b1a97dfb7e7460518636248116813a09c95f7553d629ae8c1185126eb96/fastapi_startkit-0.44.0-py3-none-any.whl", hash = "sha256:c5f85be346c94e4c624940d88f139d9ba1d2521bef78b2997e4d62156d1fda4a", size = 386172, upload-time = "2026-06-13T19:57:08.688Z" },
 ]
 
 [package.optional-dependencies]
@@ -324,6 +324,7 @@ database = [
 ]
 fastapi = [
     { name = "fastapi", extra = ["standard"] },
+    { name = "itsdangerous" },
 ]
 sqlite = [
     { name = "aiosqlite" },
@@ -342,18 +343,20 @@ dependencies = [
 dev = [
     { name = "dumpdie" },
     { name = "pytest" },
+    { name = "pytest-asyncio" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "cleo", specifier = ">=2.1.0" },
-    { name = "fastapi-startkit", extras = ["database", "fastapi", "sqlite"] },
+    { name = "fastapi-startkit", extras = ["database", "fastapi", "sqlite"], specifier = "==0.44.0" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "dumpdie", specifier = ">=1.5.0" },
     { name = "pytest", specifier = ">=9.0.2" },
+    { name = "pytest-asyncio", specifier = ">=0.24.0" },
 ]
 
 [[package]]
@@ -566,6 +569,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/72/34/14ca021ce8e5dfedc35312d08ba8bf51fdd999c576889fc2c24cb97f4f10/iniconfig-2.3.0.tar.gz", hash = "sha256:c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730", size = 20503, upload-time = "2025-10-18T21:55:43.219Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl", hash = "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12", size = 7484, upload-time = "2025-10-18T21:55:41.639Z" },
+]
+
+[[package]]
+name = "itsdangerous"
+version = "2.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/9c/cb/8ac0172223afbccb63986cc25049b154ecfb5e85932587206f42317be31d/itsdangerous-2.2.0.tar.gz", hash = "sha256:e0050c0b7da1eea53ffaf149c0cfbb5c6e2e2b69c4bef22c81fa6eb73e5f6173", size = 54410, upload-time = "2024-04-16T21:28:15.614Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/04/96/92447566d16df59b2a776c0fb82dbc4d9e07cd95062562af01e408583fc4/itsdangerous-2.2.0-py3-none-any.whl", hash = "sha256:c6242fc49e35958c8b15141343aa660db5fc54d4f13a1db01a3f5891b98700ef", size = 16234, upload-time = "2024-04-16T21:28:14.499Z" },
 ]
 
 [[package]]
@@ -843,6 +855,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7d/0d/549bd94f1a0a402dc8cf64563a117c0f3765662e2e668477624baeec44d5/pytest-9.0.3.tar.gz", hash = "sha256:b86ada508af81d19edeb213c681b1d48246c1a91d304c6c81a427674c17eb91c", size = 1572165, upload-time = "2026-04-07T17:16:18.027Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d4/24/a372aaf5c9b7208e7112038812994107bc65a84cd00e0354a88c2c77a617/pytest-9.0.3-py3-none-any.whl", hash = "sha256:2c5efc453d45394fdd706ade797c0a81091eccd1d6e4bccfcd476e2b8e0ab5d9", size = 375249, upload-time = "2026-04-07T17:16:16.13Z" },
+]
+
+[[package]]
+name = "pytest-asyncio"
+version = "1.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/43/7c/d36d04db312ecf4298932ef77e6e4a9e8ad017906e24e34f0b0c361a2473/pytest_asyncio-1.4.0.tar.gz", hash = "sha256:c6c0d2259945122819f171a32ecea2c349ead889ee28176caaf492143424be42", size = 58514, upload-time = "2026-05-26T09:56:04.083Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/03/e2/08a497ef684b88559c9cc5f4ad53a37e7b99e727094a86d6ea32536d5d3c/pytest_asyncio-1.4.0-py3-none-any.whl", hash = "sha256:933ca923a23075a87fb7070c0ec272a6848489824d887c85c812670932835aa1", size = 16930, upload-time = "2026-05-26T09:56:02.576Z" },
 ]
 
 [[package]]

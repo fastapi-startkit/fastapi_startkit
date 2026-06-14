@@ -1,6 +1,6 @@
 import dataclasses
 
-from fastapi_startkit.environment.environment import env
+from fastapi_startkit.environment import env
 from fastapi_startkit.logging.config import StackChannel, DailyChannel, TerminalChannel
 
 
