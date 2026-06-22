@@ -68,7 +68,9 @@ def _key_predicate(key: str) -> Predicate:
 
 def _compile(responses: Any) -> tuple[list[tuple[Predicate, AIMessage]], bool]:
     if responses is None:
-        return [], False
+        # Match every call with an empty response, mirroring Http::fake() with no
+        # arguments. An explicit mapping stays strict and raises on no match.
+        return [(lambda _messages: True, AIMessage(content=""))], False
     if isinstance(responses, dict):
         return [(_key_predicate(k), _as_ai_message(v)) for k, v in responses.items()], False
     if isinstance(responses, (AIMessage, str)):
@@ -112,6 +114,18 @@ class FakeChatModel(BaseChatModel):
         # Tools are irrelevant to a stub; keep the same instance so callers can
         # still read `call_count`/`calls` after the agent binds its tools.
         return self
+
+    def __enter__(self) -> "FakeChatModel":
+        from .binding import activate
+
+        activate(self)
+        return self
+
+    def __exit__(self, *_exc: Any) -> bool:
+        from .binding import deactivate
+
+        deactivate()
+        return False
 
     def _select(self, messages: list[BaseMessage]) -> AIMessage:
         self._calls.append(list(messages))

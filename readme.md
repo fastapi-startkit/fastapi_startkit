@@ -26,36 +26,49 @@ uv run python artisan serve
 ## Testing Agents
 
 The `agent_testing` package is a lightweight harness for testing LangChain agents
-**without calling a real model provider**. Both helpers return a chat model you
-hand to `create_agent(model=...)`.
+**without calling a real model provider**, in the spirit of Laravel's `Http::fake()`.
 
-### `Agent.fake()` — pattern-based stubbing
+### `Agent.fake()` — global stubbing
 
-Map prompt patterns to canned responses. A match never touches the network. Keys
-are glob/substring patterns matched against the latest user message; a
-`tool:<name>` key matches the turn that follows that tool's execution.
+Call `Agent.fake()` once and **every** agent built afterward via
+`create_agent(model="provider:name")` returns the stub — no injection, no changes
+to your agent code. This lets you hit your real backend endpoint and assert on the
+response while the model never touches the network:
 
 ```python
 from agent_testing import Agent
-from langchain.agents import create_agent
 from langchain_core.messages import AIMessage
-from langchain_core.messages.tool import ToolCall
 
-model = Agent.fake({
-    "*python*": AIMessage(content="", tool_calls=[
-        ToolCall(name="search_jobs", args={"query": "python"}, id="call_1"),
-    ]),
-    "tool:search_jobs": AIMessage(content="I found a Python Developer role at Shopify."),
-})
+class TestChatApi(TestCase):  # your HttpTestCase
+    async def test_suggest_jobs(self):
+        with Agent.fake({"*jobs*": AIMessage(content="Here are 3 Python jobs.")}):
+            response = await self.post("/chat", json={"message": "suggest me jobs"})
 
-agent = create_agent(model=model, tools=[search_jobs])
-agent.invoke({"messages": [{"role": "user", "content": "find me a python job"}]})
-
-assert model.call_count == 2
+        assert response.status_code == 200
+        assert "Python jobs" in response.json()["reply"]
+        Agent.assert_invoked("*jobs*")
 ```
 
-Pass a list instead of a mapping to return responses in sequence, or a single
-`AIMessage`/`str` to answer every call with the same response.
+Keys are glob/substring patterns matched against the latest user message; a
+`tool:<name>` key matches the model turn that follows that tool's execution. Pass a
+list to return responses in sequence, a single `AIMessage`/`str` for a constant
+reply, or nothing (`Agent.fake()`) to answer every call with an empty response.
+
+Use it as a context manager (resets on exit) or call `Agent.reset()` in teardown —
+an autouse fixture is the cleanest way to keep tests isolated:
+
+```python
+@pytest.fixture(autouse=True)
+def _reset_agents():
+    yield
+    Agent.reset()
+```
+
+Assertions mirror the facade style: `Agent.assert_invoked(pattern=None)`,
+`Agent.assert_invoked_count(n)`, and `Agent.assert_nothing_invoked()`.
+
+The returned model also works as a direct injection if you prefer to pass it
+explicitly: `create_agent(model=Agent.fake({...}), tools=[...])`.
 
 ### `Agent.record()` — record then replay
 
