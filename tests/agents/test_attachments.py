@@ -35,7 +35,7 @@ class TestAttachmentsThroughAgent(TestCase):
         doc = Document(content="Q3 revenue was $1.2M …", name="q3-report.txt")
 
         with JobAssistant.fake({"*summar*": "Q3 revenue was $1.2M."}) as fake:
-            reply = await JobAssistant.make().prompt("Summarise this report.", attachments=[doc])
+            result = await JobAssistant.make().prompt("Summarise this report.", attachments=[doc])
 
-            assert reply == "Q3 revenue was $1.2M."
+            assert result["messages"][-1].content == "Q3 revenue was $1.2M."
             assert fake.attachments[0][0].name == "q3-report.txt"

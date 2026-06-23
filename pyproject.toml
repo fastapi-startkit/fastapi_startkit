@@ -11,6 +11,7 @@ dependencies = [
     "cleo>=2.1.0",
     "fastapi-startkit[database,fastapi,sqlite]==0.44.0",
     "langchain>=1.3.10",
+    "langchain-google-genai>=4.2.5",
 ]
 
 [tool.uv]

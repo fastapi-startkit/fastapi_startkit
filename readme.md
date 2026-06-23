@@ -96,6 +96,22 @@ doc = Document(content="Q3 revenue was $1.2M …", name="q3-report.txt")
 reply = await JobAssistant.make().prompt("Summarise this report.", attachments=[doc])
 ```
 
+### Record & replay (VCR)
+
+`Agent.record(cassette)` uses the same auto-resetting binding, but VCR-style: the
+first call hits the real agent and saves the reply to `cassette`; later calls replay
+from disk with no network I/O. `mode="replay"` fails on an un-recorded prompt;
+`mode="record"` refreshes the cassette.
+
+```python
+with JobAssistant.record("tests/cassettes/chat.json"):
+    response = await self.post("/chat", data={"message": "suggest me jobs"})
+    assert response.status_code == 200
+```
+
+Commit the cassette and CI replays it offline. In tests you can pass `real=<stub>`
+to record deterministically without hitting the live model.
+
 ## AI Skills
 
 Skills teach AI agents (Claude Code, Gemini) this project's conventions.

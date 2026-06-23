@@ -1,3 +1,5 @@
+import os
+
 from app.agents.job_assistant import JobAssistant
 from tests.test_case import TestCase
 

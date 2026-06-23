@@ -22,5 +22,5 @@ async def _to_document(file: UploadFile) -> Document:
 @api.post("/chat")
 async def chat(message: str = Form(...), files: list[UploadFile] | None = File(default=None)):
     attachments = [await _to_document(file) for file in (files or [])]
-    reply = await JobAssistant.make().prompt(message, attachments=attachments)
-    return {"reply": reply}
+    result = await JobAssistant.make().prompt(message, attachments=attachments)
+    return {"reply": result["messages"][-1].content}

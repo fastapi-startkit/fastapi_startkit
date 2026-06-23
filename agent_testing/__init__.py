@@ -1,11 +1,17 @@
-from .agent import Agent, FakeAgent, FakeBinding, NoFakeResponse
-from .record import CassetteMiss, RecordingChatModel
+from .agent import (
+    Agent,
+    AgentBinding,
+    CassetteMiss,
+    FakeAgent,
+    NoFakeResponse,
+    RecordingAgent,
+)
 
 __all__ = [
     "Agent",
+    "AgentBinding",
     "FakeAgent",
-    "FakeBinding",
+    "RecordingAgent",
     "NoFakeResponse",
-    "RecordingChatModel",
     "CassetteMiss",
 ]
