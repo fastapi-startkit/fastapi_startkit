@@ -96,12 +96,6 @@ class FakeAgent(_Recorder):
 
 
 class RecordingAgent(_Recorder):
-    """Stand-in bound by ``Agent.record()``; VCR-style.
-
-    The first prompt hits the real agent and records its reply to the cassette
-    JSON file; later prompts replay from the cassette without calling the API.
-    """
-
     def __init__(self, real: Any, cassette: str | None = None):
         super().__init__()
         self._real = real
@@ -130,17 +124,6 @@ class RecordingAgent(_Recorder):
 
 
 class AgentBinding:
-    """Returned by ``Agent.fake()`` / ``Agent.record()`` — binds the stand-in on
-    enter and unbinds it on exit so the swap never leaks. Works two ways::
-
-        with JobAssistant.fake({"*jobs*": "..."}) as fake:
-            ...                                  # auto-reset on block exit
-
-        @JobAssistant.fake({"*jobs*": "..."})    # auto-reset after the test
-        async def test_chat(self):
-            ...
-    """
-
     def __init__(self, agent_cls: type["Agent"], stand_in: Any):
         self._agent_cls = agent_cls
         self._stand_in = stand_in
@@ -187,13 +170,6 @@ class AgentBinding:
 
 
 class Agent:
-    """Base class for container-resolved agents, with Laravel-style test doubles.
-
-    Subclass it, set ``system_prompt``/``tools()``, and resolve it in app code with
-    ``YourAgent.make()``. Tests swap in a pattern-based stub with ``fake()`` or a
-    VCR-style recorder with ``record()`` -- no real model, no network, no injection.
-    """
-
     model: str = "google_genai:gemini-2.5-flash"
     system_prompt: str = ""
 
