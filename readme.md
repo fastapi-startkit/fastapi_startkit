@@ -6,22 +6,15 @@ FastAPI StartKit is a modular, provider-driven framework for building robust Fas
 
 ## Quick Start
 
-### 1. Clone the repository
 ```shell
 git clone https://github.com/fastapi-startkit/fastapi_startkit example-app
 cd example-app
 cp .env.example .env
-```
-
-### 2. Install dependencies
-```shell
 uv sync
-```
-
-### 3. Run the application
-```shell
 uv run python artisan serve
 ```
+
+Then open [http://127.0.0.1:7654](http://127.0.0.1:7654) in your browser.
 
 ## AI Skills
 
